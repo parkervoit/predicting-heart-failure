@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.feature_selection import SelectKBest, f_regression, chi2
 
 def train_validate_test_split(df, target, seed=123):
     '''
@@ -50,3 +51,16 @@ def run_metrics(X, y, model, data_set = 'This'):
     print(f'False positive rate for the model is  {fpr:.2%}')
     print(f'True negative rate for the model is {tnr:.2%}')
     print(f'False negative rate for the model is {fnr:.2%}\n')
+    
+def select_kbest(X, y, stats = f_regression, k = 3):
+    '''select_kbest(X, y, stats = f_regression, k = 3)
+    can change stats test to chi2 if working with categorical variables.
+    k is default to 3, but can be edited to give more features.
+    returns a list of k best features '''
+    X_best= SelectKBest(stats, k).fit(X, y)
+    mask = X_best.get_support() #list of booleans for selected features
+    new_feat = [] 
+    for bool, feature in zip(mask, X.columns):
+        if bool:
+            new_feat.append(feature)
+    return print('The best features are:{}'.format(new_feat))

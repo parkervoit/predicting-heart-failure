@@ -2,28 +2,9 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.model_selection import train_test_split
 from scipy import stats
 
-def train_validate_test_split(df, target, seed=123):
-    '''
-    This function takes in a dataframe, the name of the target variable
-    (for stratification purposes), and an integer for a setting a seed
-    and splits the data into train, validate and test. 
-    Test is 20% of the original dataset, validate is .30*.80= 24% of the 
-    original dataset, and train is .70*.80= 56% of the original dataset. 
-    The function returns, in this order, train, validate and test dataframes. 
-    '''
-    train_validate, test = train_test_split(df, test_size=0.2, 
-                                            random_state=seed, 
-                                            stratify=df[target])
-    train, validate = train_test_split(train_validate, test_size=0.3, 
-                                       random_state=seed,
-                                       stratify=train_validate[target])
-    return train, validate, test
-
-
-def explore_univariate(train, cat_vars, quant_vars):
+def univariate(train, cat_vars, quant_vars):
     for var in cat_vars:
         explore_univariate_categorical(train, var)
         print('_________________________________________________________________')
@@ -32,22 +13,22 @@ def explore_univariate(train, cat_vars, quant_vars):
         plt.show(p)
         print(descriptive_stats)
 
-def explore_bivariate(train, target, cat_vars, quant_vars):
+def bivariate(train, target, cat_vars, quant_vars):
     for cat in cat_vars:
-        explore_bivariate_categorical(train, 'survived', cat)
+        explore_bivariate_categorical(train, target, cat)
     for quant in quant_vars:
-        explore_bivariate_quant(train, 'survived', quant)
+        explore_bivariate_quant(train, target, quant)
 
-def explore_multivariate(train, target, cat_vars, quant_vars):
+def multivariate(train, target, cat_vars, quant_vars):
     '''
     '''
     plot_swarm_grid_with_color(train, target, cat_vars, quant_vars)
     plt.show()
     violin = plot_violin_grid_with_color(train, target, cat_vars, quant_vars)
     plt.show()
-    pair = sns.pairplot(data=train, vars=quant_vars, hue='survived')
+    pair = sns.pairplot(data=train, vars=quant_vars, hue=target)
     plt.show()
-    plot_all_continuous_vars(train, 'survived', quant_vars)
+    plot_all_continuous_vars(train, target, quant_vars)
     plt.show()    
 
 
@@ -150,7 +131,7 @@ def run_chi2(train, cat_var, target):
 
 def plot_cat_by_target(train, target, cat_var):
     p = plt.figure(figsize=(2,2))
-    p = sns.barplot(cat_var, target, data=train, alpha=.8, color='lightseagreen')
+    p = sns.barplot(x = cat_var, y = target, data=train, alpha=.8, color='lightseagreen')
     overall_rate = train[target].mean()
     p = plt.axhline(overall_rate, ls='--', color='gray')
     return p
