@@ -5,6 +5,7 @@ import seaborn as sns
 from scipy import stats
 
 def univariate(train, cat_vars, quant_vars):
+    '''Returns univariate plots and stats'''
     for var in cat_vars:
         explore_univariate_categorical(train, var)
         print('_________________________________________________________________')
@@ -14,13 +15,14 @@ def univariate(train, cat_vars, quant_vars):
         print(descriptive_stats)
 
 def bivariate(train, target, cat_vars, quant_vars):
+    '''returns categorical and quantitative bivariate plots and stats'''
     for cat in cat_vars:
         explore_bivariate_categorical(train, target, cat)
     for quant in quant_vars:
         explore_bivariate_quant(train, target, quant)
 
 def multivariate(train, target, cat_vars, quant_vars):
-    '''
+    '''Returns a swarm, violin, and pairplots of all variables in a dataframe against the target
     '''
     plot_swarm_grid_with_color(train, target, cat_vars, quant_vars)
     plt.show()
@@ -34,6 +36,7 @@ def multivariate(train, target, cat_vars, quant_vars):
 
 ### Univariate
 def get_countplot(df, cat_vars):
+    '''outputs countplots of a list of the categorical variables in a dataframe'''
     for i in df[cat_vars]:
         sns.countplot(x = i, data = df)
         plt.tight_layout()
@@ -41,6 +44,7 @@ def get_countplot(df, cat_vars):
         plt.show()
         
 def get_dist(df, quant_vars):
+    '''outputs histograms of a list ofthe quantitative variables in a dataframe'''
     for i in df[quant_vars]:
         sns.histplot(x = i, data = df, kde = True)
         plt.tight_layout()
@@ -133,6 +137,7 @@ def explore_bivariate_quant(train, target, quant_var):
     print("\n____________________\n")
     
 def get_heatmap(df, target):
+    '''Creates a correlation heatmap of dataframe variables and the target'''
     heat = pd.DataFrame(df.corr()[target])
     plt.figure(figsize = [10,10])
     sns.heatmap(heat.sort_values(by = target ,
@@ -145,6 +150,7 @@ def get_heatmap(df, target):
 ## Bivariate Categorical
 
 def run_chi2(train, cat_vars, target):
+    '''Runs chi2 analysis on a list of categorical variables against a target'''
     for i in cat_vars:
         observed = pd.crosstab(train[i], train[target])
         chi2, p, degf, expected = stats.chi2_contingency(observed)
@@ -164,6 +170,7 @@ def plot_cat_by_target(train, target, cat_var):
 ## Bivariate Quant
 
 def plot_swarm(train, target, quant_var):
+    '''Makes a swarm plot of one quant_var against the target'''
     average = train[quant_var].mean()
     p = sns.swarmplot(data=train, x=target, y=quant_var, color='lightgray')
     p = plt.title(quant_var)
@@ -171,6 +178,7 @@ def plot_swarm(train, target, quant_var):
     return p
 
 def plot_boxen(train, target, quant_var):
+    '''Creates a box plot of a quantitative variable against the target'''
     average = train[quant_var].mean()
     p = sns.boxenplot(data=train, x=target, y=quant_var, color='lightseagreen')
     p = plt.title(quant_var)
@@ -180,6 +188,7 @@ def plot_boxen(train, target, quant_var):
 # alt_hyp = ‘two-sided’, ‘less’, ‘greater’
 
 def mann_whitney(train, target, quant_vars, alt_hyp='two-sided'):
+    '''runs a mann_whitney U test on a list of quantitative variables in a dataframe'''
     for i in quant_vars:
         x = train[train[target]==0][i]
         y = train[train[target]==1][i]
