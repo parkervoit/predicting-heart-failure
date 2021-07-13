@@ -8,7 +8,18 @@ With machine learning technology, it is completely possible. In this project, a 
 
 ## Methods
 The dataset was taken from Kaggle.com, originally from a research paper by Chicco and Jurman, 2020. https://bmcmedinformdecismak.biomedcentral.com/articles/10.1186/s12911-020-1023-5. The Python libraries used were pandas and numpy for dataframe manipulation and cleaning, seaborn and matplotlib for visualization, scipy for statistical analysis, and sklearn and sklearn-imbalance for model preparation and implementation. The variables ```ejection_fraction```, ```age```, ```serum_sodium```, and ```serum_creatinine``` were chosen as features through statistical analysis and visualization. A K-Nearest Neighbors, Decision Tree, Logistic Regression, and Random Forest Ensemble models were developed. The Random Forest model perfomed the best out of the four. Ccp_alpha and class weight were determined through visualization, while the max tree depth and minimum leaf samples were determined through heuristic analysis. 
+## Data
 
+| Target           | Datatype | Description                                                         |
+|-------------------|----------|---------------------------------------------------------------------|
+| ```died```               | Boolean      | Whether or not the patient died from heart failure       |
+
+| Feature           | Datatype | Description                                                         |
+|-------------------|----------|---------------------------------------------------------------------|
+| ```age```               | int      | Age of the patient in years                                         |
+| ```ejection_fraction```| float64  | Percent of blood volume expelled from the heart with each heartbeat |
+| ```serum_sodium```      | float64  | Blood concentration of sodium in mEq/L                              |
+| ```serum_creatine```    | float64  | Blood concentration of creatine in mg/dL                            |
 ## Results
 The Random Forest model outperformed baseline by 2% overall accuracy, but was able to predict cases of death close to 95% of the time while only missing 5% of heart attack cases. It incorrectly identified non-fatal cases as fatal around 40% of the time. 
 
