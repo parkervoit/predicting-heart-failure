@@ -131,16 +131,27 @@ def explore_bivariate_quant(train, target, quant_var):
     print(descriptive_stats, "\n")
     print("\nMann-Whitney Test:\n", mann_whitney)
     print("\n____________________\n")
-
+    
+def get_heatmap(df, target):
+    heat = pd.DataFrame(df.corr()[target])
+    plt.figure(figsize = [10,10])
+    sns.heatmap(heat.sort_values(by = target ,
+                                 ascending = False), 
+                                 center = 0, cmap='RdBu', 
+                                 annot=True, 
+                                 square = True)
+    plt.title(f'Correlation between variables and {target}', pad = 30)
+    return plt.show()
 ## Bivariate Categorical
 
-def run_chi2(train, cat_var, target):
-    observed = pd.crosstab(train[cat_var], train[target])
-    chi2, p, degf, expected = stats.chi2_contingency(observed)
-    chi2_summary = pd.DataFrame({'chi2': [chi2], 'p-value': [p], 
-                                 'degrees of freedom': [degf]})
-    expected = pd.DataFrame(expected)
-    return chi2_summary, observed, expected
+def run_chi2(train, cat_vars, target):
+    for i in cat_vars:
+        observed = pd.crosstab(train[i], train[target])
+        chi2, p, degf, expected = stats.chi2_contingency(observed)
+        chi2_summary = pd.DataFrame({'chi2 for ' + i: [chi2], 'p-value': [p], 
+                                         'degrees of freedom': [degf]})
+        expected = pd.DataFrame(expected)
+        print(chi2_summary)
 
 def plot_cat_by_target(train, target, cat_var):
     p = plt.figure(figsize=(2,2))
@@ -168,11 +179,12 @@ def plot_boxen(train, target, quant_var):
 
 # alt_hyp = ‘two-sided’, ‘less’, ‘greater’
 
-def compare_means(train, target, quant_var, alt_hyp='two-sided'):
-    x = train[train[target]==0][quant_var]
-    y = train[train[target]==1][quant_var]
-    return stats.mannwhitneyu(x, y, use_continuity=True, alternative=alt_hyp)
-
+def mann_whitney(train, target, quant_vars, alt_hyp='two-sided'):
+    for i in quant_vars:
+        x = train[train[target]==0][i]
+        y = train[train[target]==1][i]
+        stat, p = stats.mannwhitneyu(x, y, use_continuity=True, alternative= 'two-sided')
+        print(f'Mann-whitney U for {i} : {stat}, p = {p:.3f}')
 
 ### Multivariate
 
