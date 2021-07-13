@@ -33,8 +33,21 @@ def multivariate(train, target, cat_vars, quant_vars):
 
 
 ### Univariate
-
-def explore_univariate_categorical(train, cat_var):
+def get_countplot(df, cat_vars):
+    for i in df[cat_vars]:
+        sns.countplot(x = i, data = df)
+        plt.tight_layout()
+        plt.title(label = (f'Countplot of {i} column'))
+        plt.show()
+        
+def get_dist(df, quant_vars):
+    for i in df[quant_vars]:
+        sns.histplot(x = i, data = df, kde = True)
+        plt.tight_layout()
+        plt.title(label = (f'Countplot of {i} column'))
+        plt.show()
+        
+def univariate_categorical(train, cat_var):
     '''
     takes in a dataframe and a categorical variable and returns
     a frequency table and barplot of the frequencies. 

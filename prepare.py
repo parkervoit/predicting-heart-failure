@@ -28,6 +28,12 @@ def train_validate_test_split(df, seed=123, stratify = True):
                                         random_state=seed)
         return train, validate, test
     
+def prep_heart(df):
+    '''renames the heart_df death column to died and converts platelets to an integer number'''
+    df = df.rename(columns = {'DEATH_EVENT' : 'died'})
+    df.platelets = df.platelets.astype(int)
+    return df
+
 def minmax_scale(data_set, X_train):
     '''
     minmax_scale(data_set, X_train)
