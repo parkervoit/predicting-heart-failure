@@ -18,16 +18,24 @@ A K-Nearest Neighbors, Decision Tree, Logistic Regression, and Random Forest Ens
 
 ## Data Table
 
-| Target           | Datatype | Description                                                         |
-|-------------------|----------|---------------------------------------------------------------------|
-| ```died```               | Boolean      | Whether or not the patient died from heart failure       |
+| Target                   | Datatype | Description                                                                        |
+|--------------------------|----------|----------------------------------------------------------------------------------|
+| ```died```               | int      | Whether or not the patient died from heart failure
 
-| Feature           | Datatype | Description                                                         |
-|-------------------|----------|---------------------------------------------------------------------|
-| ```age```               | int      | Age of the patient in years                                         |
-| ```ejection_fraction```| float64  | Percent of blood volume expelled from the heart with each heartbeat |
-| ```serum_sodium```      | float64  | Blood concentration of sodium in mEq/L                              |
-| ```serum_creatine```    | float64  | Blood concentration of creatine in mg/dL                            |
+| Feature                  | Datatype | Description                                                                        |
+|--------------------------|----------|------------------------------------------------------------------------------------|
+| ```age```                      | int      | Age of the patient in years                                                        |
+| ```ejection_fraction```        | float64  | Percent of blood volume expelled from the heart with each heartbeat                |
+| ```serum_sodium```             | float64  | Blood concentration of sodium in mEq/L                                             |
+| ```serum_creatine```           | float64  | Blood concentration of creatine in mg/dL                                           |
+| ```anaemia```                  | int      | 1 = Diagnosed anaemic, 0 = not anaemic                                             |
+| ```creatinine_phosphokinase``` | float64  | Blood concentration of creatinine phosphokinase in IU/L                            |
+| ```diabetes```                 | int      | 1 = diabetic, 0 = not diabetic                                                     |
+| ```high_blood_pressure```      | int      | 1 = has high blood pressure, 0 = does not have high blood pressure                 |
+| ```platelets```                | int      | Number of platelets per $\mu$/L of blood                                           |
+| ```sex```                      | int      | 1 = Male, 0 = Female                                                               |
+| ```smoking```                  | int      | 1 = Smokes tobacco, 0 = non-smoker                                                 |
+| ````time````                   | int      | Number of days from collection of biomarkers to when the target data was collected |
 
 ## Results
 The Random Forest model outperformed baseline by 2% overall accuracy, but was able to predict cases of death close to 95% of the time while only missing 5% of heart attack cases. It incorrectly identified non-fatal cases as fatal around 40% of the time. 
