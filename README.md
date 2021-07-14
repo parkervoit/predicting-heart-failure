@@ -45,3 +45,6 @@ Machine learning technology can be leveraged to predict fatal cases of heart fai
 The Random Forest Ensemble model was effective in predicting fatal cases, but could be improved on by reducing its false positive rate. ```time``` should be further processed and used in the model in an effort to increase the model's precision and reduce the false positive rate. 
 
  Implementation of a predictive heart failure fatality model would have major impacts on how healthcare is delivered. 
+
+ ## Reproducability
+ In order to reproduce this project, you will need to clone the repo and download the dataset from [kaggle.com](https://www.kaggle.com/andrewmvd/heart-failure-clinical-data). All random seeds = 123, and you will need to import the modules used in the notebook. You will need to be able to code in Python3, operate Jupyter Lab, and know how to use scikit-learn and scikit-imblearn, along with Pandas and Numpy. 
